@@ -1,0 +1,25 @@
+MODEL:
+  META_ARCHITECTURE: "GeneralizedRCNN"
+  WEIGHTS: "detectron2://ImageNetPretrained/MSRA/R-50.pkl"
+  MASK_ON: False
+  RESNETS:
+    DEPTH: 50
+  RPN:
+    PRE_NMS_TOPK_TEST: 6000
+    POST_NMS_TOPK_TEST: 1000
+  ROI_HEADS:
+    NAME: "Res5ROIHeads"
+    NUM_CLASSES: 1
+DATASETS:
+  TRAIN: ("caltech_train",)
+  TEST: ("caltech_test",)
+SOLVER:
+  IMS_PER_BATCH: 2
+  BASE_LR: 0.0005
+  STEPS: (45000,)
+  MAX_ITER: 90000
+INPUT:
+  MIN_SIZE_TRAIN: (480,)
+DATALOADER:
+  NUM_WORKERS: 2
+OUTPUT_DIR: './faster_rcnn/'
