@@ -35,7 +35,7 @@ for i, k in enumerate(tqdm(caltech_annos)):
             w1, h1, w2, h2 = bbox[2], bbox[3], vbbox[2], vbbox[3]
             if w2 * h2 / (w1 * h1) <= 0.3:
                 continue
-        annos.append({'bbox': bbox, 'category_id': 0, 'iscrowd': 0})
+        annos.append({'bbox': bbox, 'category_id': 0, 'iscrowd': 0, 'occl': person['occl']})
 
     proposal_boxes, proposal_objectness_logits = [], []
     with open(os.path.join(caltech_prop_path, k + '.txt')) as f:

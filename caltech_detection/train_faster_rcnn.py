@@ -1,4 +1,4 @@
-# Train a faster-rcnn model on caltech data
+# Train a faster-rcnn model on caltech data, use default trainer
 import os
 import json
 
@@ -28,7 +28,7 @@ for d in ["train", "test"]:
 caltech_metadata = MetadataCatalog.get("caltech_train")
 
 cfg = get_cfg()
-cfg.merge_from_file("faster_rcnn.yaml")
+cfg.merge_from_file("./configs/faster_rcnn.yaml")
 # Train begin with coco-detection model. If you want to train from scratch, comment it out.
 cfg.MODEL.WEIGHTS = "detectron2://COCO-Detection/faster_rcnn_R_50_C4_1x/137257644/model_final_721ade.pkl"
 

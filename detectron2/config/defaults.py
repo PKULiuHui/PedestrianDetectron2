@@ -25,6 +25,13 @@ _C.MODEL.MASK_ON = False
 _C.MODEL.KEYPOINT_ON = False
 _C.MODEL.DEVICE = "cuda"
 _C.MODEL.META_ARCHITECTURE = "GeneralizedRCNN"
+_C.MODEL.ATTENTION = False
+_C.MODEL.ATTENTION_LOSS = False
+_C.MODEL.ATTENTION_LOSS_WEIGHT = 0.000005
+_C.MODEL.TRANSFORM_LOSS = False
+_C.MODEL.TRANSFORM_LOSS_WEIGHT = 0.1
+_C.MODEL.TRANSFORM_CENTER = "trans_center.pkl"
+_C.MODEL.REG_LOSS = False
 
 # Path (possibly with schema like catalog:// or detectron2://) to a checkpoint file
 # to be loaded to the model. You can find available models in the model zoo.

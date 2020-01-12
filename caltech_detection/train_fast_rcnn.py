@@ -1,10 +1,7 @@
-# Train a fast-rcnn model on caltech data
+# Train a fast-rcnn model on caltech data, use default trainer
 import os
-import numpy as np
 import json
-import cv2
 
-from detectron2 import model_zoo
 from detectron2.structures import BoxMode
 from detectron2.data import DatasetCatalog, MetadataCatalog
 from detectron2.engine import DefaultTrainer
@@ -30,7 +27,7 @@ for d in ["train", "test"]:
 caltech_metadata = MetadataCatalog.get("caltech_train")
 
 cfg = get_cfg()
-cfg.merge_from_file("fast_rcnn.yaml")
+cfg.merge_from_file("./configs/fast_rcnn.yaml")
 
 os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
 trainer = DefaultTrainer(cfg)

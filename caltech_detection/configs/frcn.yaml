@@ -1,0 +1,37 @@
+MODEL:
+  META_ARCHITECTURE: "AttentionRCNN"
+  ATTENTION: False
+  BACKBONE:
+    NAME: "build_resnet_backbone"
+  WEIGHTS: "detectron2://ImageNetPretrained/MSRA/R-50.pkl"
+  MASK_ON: False
+  LOAD_PROPOSALS: True
+  RESNETS:
+    DEPTH: 50
+  PROPOSAL_GENERATOR:
+    NAME: "PrecomputedProposals"
+  ROI_HEADS:
+    NAME: "StandardROIHeads"
+    NUM_CLASSES: 1
+    BATCH_SIZE_PER_IMAGE: 256
+  ROI_BOX_HEAD:
+    NAME: "FastRCNNConvFCHead"
+    NUM_FC: 2
+    POOLER_RESOLUTION: 7
+DATASETS:
+  TRAIN: ("caltech_train",)
+  PROPOSAL_FILES_TRAIN: ("train_prop.pkl", )
+  TEST: ("caltech_test",)
+  PROPOSAL_FILES_TEST: ("test_prop.pkl", )
+SOLVER:
+  IMS_PER_BATCH: 2
+  BASE_LR: 0.0005
+  GAMMA: 0.1
+  STEPS: (45000,)
+  MAX_ITER: 90000
+INPUT:
+  MIN_SIZE_TRAIN: (480,)
+DATALOADER:
+  NUM_WORKERS: 1
+  FILTER_EMPTY_ANNOTATIONS: False
+OUTPUT_DIR: './frcn/'

@@ -575,6 +575,33 @@ class StandardROIHeads(ROIHeads):
             pred_instances = self.forward_with_given_boxes(features, pred_instances)
             return pred_instances, {}
 
+    def transform_forward(self, images, features, proposals, targets=None):
+        del images
+        if self.training:
+            proposals = self.label_and_sample_proposals(proposals, targets)
+        del targets
+
+        features_list = [features[f] for f in self.in_features]
+
+        box_features = self.box_pooler(features_list, [x.proposal_boxes for x in proposals])
+        return proposals, box_features.detach()
+
+    def get_prop_feature(self, images, features, proposals, targets=None):
+        """
+        Get proposal feature
+        """
+        assert not self.training
+        del images
+        del targets
+
+        features_list = [features[f] for f in self.in_features]
+        box_features_0 = self.box_pooler(features_list, [x.proposal_boxes for x in proposals])
+        box_features = self.box_head(box_features_0)
+        pred_class_logits, pred_proposal_deltas = self.box_predictor(box_features)
+        scores = torch.softmax(pred_class_logits, dim=-1)
+
+        return box_features_0, scores[:, 0]
+
     def forward_with_given_boxes(self, features, instances):
         """
         Use the given boxes in `instances` to produce other (non-box) per-ROI outputs.
